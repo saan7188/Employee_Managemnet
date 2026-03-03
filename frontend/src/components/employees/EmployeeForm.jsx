@@ -60,7 +60,7 @@ export default function EmployeeForm({
           <div className="input-group">
             <label>Department*</label>
             {isViewOnly ? <div className="view-text">{formData.department || '-'}</div> : 
-              <select name="department" value={formData.department} onChange={handleInputChange} className="form-input">
+              <select required name="department" value={formData.department} onChange={handleInputChange} className="form-input">
                 <option value="">Select Department</option>
                 <option value="Design">Design</option>
                 <option value="Engineering">Engineering</option>
@@ -72,7 +72,7 @@ export default function EmployeeForm({
           <div className="input-group">
             <label>Designation*</label>
             {isViewOnly ? <div className="view-text">{formData.designation || '-'}</div> : 
-              <select name="designation" value={formData.designation} onChange={handleInputChange} className="form-input">
+              <select required name="designation" value={formData.designation} onChange={handleInputChange} className="form-input">
                 <option value="">Select designation</option>
                 <option value="Design Lead">Design Lead</option>
                 <option value="Developer">Developer</option>
@@ -89,7 +89,7 @@ export default function EmployeeForm({
           <div className="input-group">
             <label>Type*</label>
             {isViewOnly ? <div className="view-text">{formData.type || '-'}</div> : 
-              <select name="type" value={formData.type} onChange={handleInputChange} className="form-input">
+              <select required name="type" value={formData.type} onChange={handleInputChange} className="form-input">
                 <option value="">Select Type</option>
                 <option value="Office">Office</option>
                 <option value="Remote">Remote</option>
@@ -99,7 +99,7 @@ export default function EmployeeForm({
           <div className="input-group">
             <label>Status*</label>
             {isViewOnly ? <div className="view-text">{formData.status || '-'}</div> : 
-              <select name="status" value={formData.status} onChange={handleInputChange} className="form-input">
+              <select required name="status" value={formData.status} onChange={handleInputChange} className="form-input">
                 <option value="">Select Status</option>
                 <option value="Permanent">Permanent</option>
                 <option value="Contract">Contract</option>

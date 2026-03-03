@@ -52,7 +52,12 @@ export default function EmployeeDashboard() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.employeeId || !formData.name) return toast.error("Name and Employee ID required");
+    
+    const { name, employeeId, department, designation, type, status } = formData;
+
+    if (!name || !employeeId || !department || !designation || !type || !status) {
+      return toast.error("Please fill in all required fields!");
+    }
 
     try {
       if (currentView === 'edit') {
@@ -64,7 +69,9 @@ export default function EmployeeDashboard() {
       }
       fetchEmployees();
       setCurrentView('list');
-    } catch (err) { toast.error('Error saving employee'); }
+    } catch (err) { 
+      toast.error(err.response?.data?.message || 'Error saving employee'); 
+    }
   };
 
   const openDelete = (emp) => { setSelectedEmployee(emp); setShowDeleteModal(true); };

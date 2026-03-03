@@ -1,4 +1,3 @@
-// db.js
 const mysql = require("mysql2");
 require("dotenv").config();
 
@@ -13,12 +12,12 @@ const db = mysql.createPool({
   queueLimit: 0
 });
 
-// Check connection and create the CORRECT table
+
 db.getConnection((err, connection) => {
   if (err) {
-    console.error("❌ Database connection failed:", err.message);
+    console.error("Database connection failed:", err.message);
   } else {
-    console.log("✅ MySQL Connected Successfully");
+    console.log("MySQL Connected Successfully");
 
     const createTableQuery = `
       CREATE TABLE IF NOT EXISTS employees (
@@ -36,9 +35,9 @@ db.getConnection((err, connection) => {
 
     connection.query(createTableQuery, (err) => {
       if (err) {
-        console.error("❌ Error creating table:", err.message);
+        console.error("Error creating table:", err.message);
       } else {
-        console.log("✅ Employees table ready and synced with frontend");
+        console.log("Employees table ready and synced with frontend");
       }
       connection.release();
     });

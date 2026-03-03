@@ -1,26 +1,22 @@
-// routes/employees.js
-const express = require("express");
-const router = express.Router();
 const db = require("../db");
 
-// GET all employees
-router.get("/", (req, res) => {
+exports.getAllEmployees = (req, res) => {
   db.query("SELECT * FROM employees ORDER BY id DESC", (err, result) => {
     if (err) return res.status(500).json({ error: err.message });
     res.json(result);
   });
-});
+};
 
-// GET single employee
-router.get("/:id", (req, res) => {
+
+exports.getEmployeeById = (req, res) => {
   db.query("SELECT * FROM employees WHERE id = ?", [req.params.id], (err, result) => {
     if (err) return res.status(500).json({ error: err.message });
     res.json(result[0]);
   });
-});
+};
 
-// ADD employee
-router.post("/", (req, res) => {
+
+exports.createEmployee = (req, res) => {
   const { employeeId, name, department, designation, project, type, status, avatar } = req.body;
 
   db.query(
@@ -37,10 +33,9 @@ router.post("/", (req, res) => {
       res.json({ message: "Employee added successfully" });
     }
   );
-});
+};
 
-// UPDATE employee
-router.put("/:id", (req, res) => {
+exports.updateEmployee = (req, res) => {
   const { employeeId, name, department, designation, project, type, status, avatar } = req.body;
 
   db.query(
@@ -51,14 +46,12 @@ router.put("/:id", (req, res) => {
       res.json({ message: "Employee updated successfully" });
     }
   );
-});
+};
 
-// DELETE employee
-router.delete("/:id", (req, res) => {
+
+exports.deleteEmployee = (req, res) => {
   db.query("DELETE FROM employees WHERE id = ?", [req.params.id], (err) => {
     if (err) return res.status(500).json({ error: err.message });
     res.json({ message: "Employee deleted successfully" });
   });
-});
-
-module.exports = router;
+};
