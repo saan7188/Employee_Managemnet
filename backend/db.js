@@ -1,4 +1,4 @@
-const mysql = require("mysql2");
+const mysql = require("mysql2/promise");
 require("dotenv").config();
 
 const db = mysql.createPool({
@@ -12,14 +12,12 @@ const db = mysql.createPool({
   queueLimit: 0
 });
 
-
-db.getConnection((err, connection) => {
-  if (err) {
-    console.error("Database connection failed:", err.message);
-  } else {
-    console.log("MySQL Connected Successfully");
-
-    const createTableQuery = `
+async function initializeDatabase() {
+  try {
+    const connection = await db.getConnection();
+    console.log("✅ MySQL Connected Successfully (Promise Pool)");
+    
+    await connection.query(`
       CREATE TABLE IF NOT EXISTS employees (
         id INT AUTO_INCREMENT PRIMARY KEY,
         employeeId VARCHAR(50) UNIQUE NOT NULL,
@@ -31,17 +29,14 @@ db.getConnection((err, connection) => {
         status VARCHAR(50) DEFAULT 'Permanent',
         avatar VARCHAR(255) DEFAULT ''
       )
-    `;
-
-    connection.query(createTableQuery, (err) => {
-      if (err) {
-        console.error("Error creating table:", err.message);
-      } else {
-        console.log("Employees table ready and synced with frontend");
-      }
-      connection.release();
-    });
+    `);
+    
+    connection.release();
+  } catch (err) {
+    console.error("❌ Database initialization failed:", err.message);
   }
-});
+}
+
+initializeDatabase();
 
 module.exports = db;
